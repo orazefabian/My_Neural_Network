@@ -1,4 +1,4 @@
-# Mein_Neuronales_Netz
+# My_Neural_Network
 A neural network which can read a number 
 
 Full neural network which can be trained by setting a learning rate and the amount of training runs.
