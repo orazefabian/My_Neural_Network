@@ -14,8 +14,7 @@ for i in range(0, 10):
     image = imageio.imread(f"../Data/test_{i}.png")
     image = 255. - np.mean(image, axis=2).reshape(1, -1)
 
-    predict = model.predict(image)
-    predict = np.argmax(predict, axis=0).reshape(-1)
+    predict = model.predict_number(image)
     if predict[0] == i:
         print(colored(predict, "green"))
     else:

@@ -158,3 +158,7 @@ class NeuralNetwork(object):
             if self.final_pred[i] == num_exp and self.y_test[i] == num_act:
                 plt.imshow(self.X_test[i].reshape(28, 28))
                 plt.show()
+
+    def predict_number(self, image):
+        return np.argmax(self.predict(image), axis=0).reshape(-1)
+
