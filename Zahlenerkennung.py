@@ -118,21 +118,13 @@ class NeuralNetwork(object):
             self.costs.append(cost)
             self.accs.append(acc)
 
-        print(acc)
+        print(f"{acc} ({round(acc*100,1)}% accuracy)")
 
         self.final_pred = y_test_pred
 
         sec_end = float(round(time.time() * 1000))
         sec_duration = float("{0:.2f}".format((sec_end - sec_start) / 1000 / 60))
         print(f"Time spent for training: {sec_duration} minutes")
-
-        if not self.save_weights:
-            print("Do you want to save the weights? y/n")
-            save = input()
-            if save == "y":
-                self.save_weights = True
-            elif save == "n":
-                self.save_weights = False
 
         if self.save_weights:
             with open("w0.p", "wb") as file:
@@ -161,4 +153,3 @@ class NeuralNetwork(object):
 
     def predict_number(self, image):
         return np.argmax(self.predict(image), axis=0).reshape(-1)
-
