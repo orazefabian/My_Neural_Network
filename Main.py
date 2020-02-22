@@ -1,4 +1,4 @@
-from Mein_Neuronales_Netz.Zahlenerkennung import NeuralNetwork
+from My_Neural_Network.Zahlenerkennung import NeuralNetwork
 import Data
 import imageio
 import numpy as np
@@ -9,7 +9,7 @@ model.train_runs(1)
 model.confusion_matrix()
 model.plot_acc_cost()
 
-# test my 10 numbers
+# test my 10 numbers from 0 to 9
 for i in range(0, 10):
     image = imageio.imread(f"../Data/test_{i}.png")
     image = 255. - np.mean(image, axis=2).reshape(1, -1)
