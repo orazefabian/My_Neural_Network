@@ -3,6 +3,7 @@ import imageio
 import numpy as np
 from termcolor import colored
 import My_Neural_Network.Image_Resizer as resizer
+from matplotlib import pyplot as plt
 
 model = NeuralNetwork(lr=0.005, use_new_weights=False, save_weights=False)
 model.train_runs(1)
@@ -10,8 +11,8 @@ model.confusion_matrix()
 model.plot_acc_cost()
 
 # test my 10 numbers from 0 to 9
-for i in range(0, 10):
-    image = imageio.imread(f"Data/test_{i}.png")
+for i in range(0, 1):
+    image = resizer.reisze(f"Data_Big_Size/test_{i}.png")
     image = 255. - np.mean(image, axis=2).reshape(1, -1)
 
     predict = model.predict_number(image)
