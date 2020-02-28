@@ -11,7 +11,7 @@ model.confusion_matrix()
 model.plot_acc_cost()
 
 # test my 10 numbers from 0 to 9
-for i in range(0, 1):
+for i in range(0, 10):
     image = resizer.reisze(f"Data_Big_Size/test_{i}.png")
     image = 255. - np.mean(image, axis=2).reshape(1, -1)
 
