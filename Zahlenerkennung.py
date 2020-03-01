@@ -118,7 +118,7 @@ class NeuralNetwork(object):
             self.costs.append(cost)
             self.accs.append(acc)
 
-        print(f"{acc} ({round(acc*100,1)}% accuracy)")
+        print(f"{acc} ({round(acc * 100, 1)}% accuracy)")
 
         self.final_pred = y_test_pred
 
