@@ -1,8 +1,8 @@
-from My_Neural_Network.Zahlenerkennung import NeuralNetwork
+from My_Neural_Network.digit_recognizer import NeuralNetwork
 import imageio
 import numpy as np
 from termcolor import colored
-import My_Neural_Network.Image_Resizer as resizer
+import My_Neural_Network.image_resizer as resizer
 from matplotlib import pyplot as plt
 
 model = NeuralNetwork(lr=0.005, use_new_weights=False, save_weights=False)
