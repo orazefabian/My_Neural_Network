@@ -1,14 +1,17 @@
+import screenshot as screenshot
 from kivy import Config
 from kivy.app import App
 from kivy.uix.button import Button
+from kivy.uix.label import Label
 from kivy.uix.widget import Widget
 from kivy.graphics import Color, Line
 from kivy.core.window import Window
 import numpy as np
+import os
 
 import My_Neural_Network.image_resizer as resizer
 
-from My_Neural_Network.digit_recognizer import NeuralNetwork
+from My_Neural_Network.brain import NeuralNetwork
 
 Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
 Window.size = (600, 800)
@@ -28,10 +31,6 @@ class GUI(Widget):
     def paint(self):
         global width
         global height
-        global dots
-        width = 600
-        height = 800
-        dots = np.zeros((width, height))
 
 
 class PaintTool(Widget):
@@ -40,16 +39,20 @@ class PaintTool(Widget):
         global length, n_points
         with self.canvas:
             Color(0, 0, 0)
-            touch.ud['line'] = Line(points=(touch.x, touch.y), width=40)
+            touch.ud['line'] = Line(points=(touch.x, touch.y), width=50)
             n_points = 0
             length = 0
-            dots[int(touch.x / 2), int(touch.y / 2)] = 255
 
     def on_touch_move(self, touch):
         if touch.button == 'left':
             touch.ud['line'].points += [touch.x, touch.y]
-            touch.ud['line'].width = 40
-            dots[int(touch.x / 2) - 40: int(touch.x / 2) + 40, int(touch.y / 2) - 40: int(touch.y / 2) + 40] = 255
+            touch.ud['line'].width = 50
+
+
+def removeFiles():
+    for file in os.listdir('.'):
+        if file.startswith('digit'):
+            os.remove(file)
 
 
 class Application(App):
@@ -58,25 +61,31 @@ class Application(App):
         parent = GUI()
         parent.paint()
         self.painter = PaintTool()
-        printbtn = Button(text="print")
+        readbtn = Button(text="read")
         clearbtn = Button(text="clear", pos=(parent.width, 0))
-        printbtn.bind(on_release=self.printbtn)
+        self.resultlbl = Label(text="", pos=(parent.width + 800, 10), font_size=100,
+                               markup=True)
+        readbtn.bind(on_release=self.readbtn)
         clearbtn.bind(on_release=self.clear)
         parent.add_widget(self.painter)
-        parent.add_widget(printbtn)
+        parent.add_widget(readbtn)
         parent.add_widget(clearbtn)
+        parent.add_widget(self.resultlbl)
         return parent
 
-    def printbtn(self, obj):
-        image = resizer.resizeArr(dots)
-        image = np.mean(image, axis=2).reshape(1, -1)
-        print(image)
-        print(model.predict_number(image))
+    def readbtn(self, obj):
+        Window.screenshot(name='digit.png')
+        image = resizer.resize(f"digit0001.png")
+        image = 255. - np.mean(image, axis=2).reshape(1, -1)
+        prediction = model.predict_number(image)
+        print(prediction)
+        self.resultlbl.text = f"[color=3333ff][b]result: {prediction}[/b][/color]"
+        removeFiles()
 
     def clear(self, obj):
-        global dots
         self.painter.canvas.clear()
-        dots = np.zeros((width, height))
+        self.resultlbl.text = ""
+        removeFiles()
 
 
 if __name__ == '__main__':

@@ -1,4 +1,4 @@
-from My_Neural_Network.digit_recognizer import NeuralNetwork
+from My_Neural_Network.brain import NeuralNetwork
 import imageio
 import numpy as np
 from termcolor import colored
@@ -13,8 +13,7 @@ if __name__ == '__main__':
 
     # test my 10 numbers from 0 to 9
     for i in range(0, 10):
-        image = np.array(resizer.resize(f"Data_Big_Size/test_{i}.png"))
-        print(image.shape)
+        image = resizer.resize(f"Data_Big_Size/test_{i}.png")
         image = 255. - np.mean(image, axis=2).reshape(1, -1)
         print(image)
         predict = model.predict_number(image)
