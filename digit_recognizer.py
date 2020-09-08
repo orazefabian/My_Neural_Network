@@ -21,14 +21,14 @@ class NeuralNetwork(object):
         self.costs = [0]
         self.accs = [0]
 
-        self.X_train = self.open_images("../mnist/train-images-idx3-ubyte.gz").reshape(-1, 784)
-        self.y_train = self.open_labels("../mnist/train-labels-idx1-ubyte.gz")
+        self.X_train = self.open_images("mnist/train-images-idx3-ubyte.gz").reshape(-1, 784)
+        self.y_train = self.open_labels("mnist/train-labels-idx1-ubyte.gz")
 
         oh = OneHotEncoder()
         self.y_train_oh = oh.fit_transform(self.y_train.reshape(-1, 1)).toarray()
 
-        self.X_test = self.open_images("../mnist/t10k-images-idx3-ubyte.gz").reshape(-1, 784)
-        self.y_test = self.open_labels("../mnist/t10k-labels-idx1-ubyte.gz")
+        self.X_test = self.open_images("mnist/t10k-images-idx3-ubyte.gz").reshape(-1, 784)
+        self.y_test = self.open_labels("mnist/t10k-labels-idx1-ubyte.gz")
 
         if use_new_weights == True:
             self.w0 = np.random.randn(300, 784)

@@ -29,34 +29,29 @@ class GUI(Widget):
         global width
         global height
         global dots
-        width = 1200
-        height = 1600
+        width = 600
+        height = 800
         dots = np.zeros((width, height))
 
 
 class PaintTool(Widget):
 
     def on_touch_down(self, touch):
-        global length, n_points, last_x, last_y
+        global length, n_points
         with self.canvas:
             Color(0, 0, 0)
             touch.ud['line'] = Line(points=(touch.x, touch.y), width=40)
-            last_x = int(touch.x)
-            last_y = int(touch.y)
             n_points = 0
             length = 0
-            dots[int(touch.x), int(touch.y)] = 255
+            dots[int(touch.x / 2), int(touch.y / 2)] = 255
 
     def on_touch_move(self, touch):
-        global last_x, last_y
         if touch.button == 'left':
             touch.ud['line'].points += [touch.x, touch.y]
-            x = int(touch.x)
-            y = int(touch.y)
+            x = int(touch.x / 2)
+            y = int(touch.y / 2)
             touch.ud['line'].width = 40
-            last_x = x
-            last_y = y
-            dots[int(touch.x) - 40: int(touch.x) + 40, int(touch.y) - 40: int(touch.y) + 40] = 255
+            dots[int(touch.x / 2) - 40: int(touch.x / 2) + 40, int(touch.y / 2) - 40: int(touch.y / 2) + 40] = 255
 
 
 class Application(App):
@@ -76,7 +71,7 @@ class Application(App):
 
     def printbtn(self, obj):
         image = resizer.resizeArr(dots)
-        #image = 255. - np.mean(image, axis=2).reshape(1, -1)
+        image = 255. - np.mean(image, axis=2).reshape(1, -1)
         print(model.predict_number(image))
 
     def clear(self, obj):
