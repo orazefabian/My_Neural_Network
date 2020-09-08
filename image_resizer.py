@@ -1,5 +1,6 @@
 import PIL
 from PIL import Image
+import io
 
 basewidth = 28
 baseheight = 28
@@ -12,6 +13,6 @@ def resize(path):
 
 
 def resizeArr(array):
-    img = Image.fromarray(array, mode=None)
+    img = Image.frombytes('RGB', (600, 800), array, 'raw')
     img = img.resize((basewidth, baseheight), PIL.Image.ANTIALIAS)
     return img

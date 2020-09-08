@@ -48,8 +48,6 @@ class PaintTool(Widget):
     def on_touch_move(self, touch):
         if touch.button == 'left':
             touch.ud['line'].points += [touch.x, touch.y]
-            x = int(touch.x / 2)
-            y = int(touch.y / 2)
             touch.ud['line'].width = 40
             dots[int(touch.x / 2) - 40: int(touch.x / 2) + 40, int(touch.y / 2) - 40: int(touch.y / 2) + 40] = 255
 
@@ -71,7 +69,8 @@ class Application(App):
 
     def printbtn(self, obj):
         image = resizer.resizeArr(dots)
-        image = 255. - np.mean(image, axis=2).reshape(1, -1)
+        image = np.mean(image, axis=2).reshape(1, -1)
+        print(image)
         print(model.predict_number(image))
 
     def clear(self, obj):
