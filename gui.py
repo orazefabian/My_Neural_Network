@@ -1,4 +1,3 @@
-import screenshot as screenshot
 from kivy import Config
 from kivy.app import App
 from kivy.uix.button import Button
@@ -9,9 +8,8 @@ from kivy.core.window import Window
 import numpy as np
 import os
 
-import My_Neural_Network.image_resizer as resizer
-
-from My_Neural_Network.brain import NeuralNetwork
+from brain import NeuralNetwork
+import image_resizer as resizer
 
 Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
 Window.size = (600, 800)
